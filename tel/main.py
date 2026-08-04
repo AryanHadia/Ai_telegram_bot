@@ -25,7 +25,9 @@ class Bot:
         if not token:
             raise ValueError("bot_token environment variable is not set")
         self.application = ApplicationBuilder().token(token).build()
+        print('1')
         self.start_handler = CommandHandler('start', self.cmd_handler.start)
+        print('2')
         self.help_handler = CommandHandler('help', self.cmd_handler.help)
         self.message_handler = MessageHandler(filters.TEXT, self.msg_handler.chat)
         self.callback_query_handler = CallbackQueryHandler(self.cb_query_handler.button)
