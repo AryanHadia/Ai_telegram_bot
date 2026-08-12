@@ -1,8 +1,10 @@
 import logging
-from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler, filters
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler, filters, AIORateLimiter
 from handlers import CmdHandler, MsgHandler, CbQueryHandler
 import os
 from dotenv import load_dotenv
+import sys
+
 
 load_dotenv()
 
@@ -24,7 +26,7 @@ class Bot:
         token = os.getenv('bot_token')
         if not token:
             raise ValueError("bot_token environment variable is not set")
-        self.application = ApplicationBuilder().token(token).build()
+        self.application = ApplicationBuilder().token(token).rate_limiter(AIORateLimiter()).build()
         print('1')
         self.start_handler = CommandHandler('start', self.cmd_handler.start)
         print('2')
